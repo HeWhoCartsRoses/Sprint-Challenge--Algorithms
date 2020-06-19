@@ -103,17 +103,19 @@ class SortingRobot:
             self.righty()
             self.lefty()
             self.check()
-        # while the lights on
-        # go right, then left
-        #
-        pass
+        self.swap_item()
 
     def lefty(self):
+        # swaps so that the largest item is left there
+        # moves, then compares
+        # once it reaches where we left the beginning
         self.swap_item()
         while self.can_move_left():
             self.move_left()
             if self.compare_item() == 1:
                 self.swap_item()
+            if self.compare_item() == None:
+                break
 
     def righty(self):
         self.swap_item()
@@ -124,14 +126,12 @@ class SortingRobot:
 
     def check(self):
         self.swap_item()
+        self.move_right()
+        self.swap_item()
         while self.can_move_right():
             self.move_right()
-            if self.compare_item() == None:
-                self.swap_item()
-                self.move_right()
             if self.compare_item() == -1:
                 self.set_light_off()
-
         if self.light_is_on() is False:
             return self.set_light_on()
         else:
